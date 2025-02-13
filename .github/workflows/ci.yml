@@ -1,10 +1,19 @@
-name: Startup Debug Test
+name: Minimal Selenium TestNG CI
 
 on: push
 
 jobs:
-  test-startup:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Say Hello
-        run: echo "GitHub Actions started successfully!"
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '8'
+
+      - name: Build with Maven (Basic)
+        run: mvn clean compile
