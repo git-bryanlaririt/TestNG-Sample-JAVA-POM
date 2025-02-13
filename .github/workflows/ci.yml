@@ -1,49 +1,10 @@
-name: Selenium TestNG CI with Maven
+name: Startup Debug Test
 
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+on: push
 
 jobs:
-  build:
+  test-startup:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4  # ✅ Updated to latest version
-
-      - name: Set Up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '8'
-
-      - name: Build with Maven
-        run: mvn clean install
-
-      - name: Run TestNG Tests
-        run: mvn test -Dsurefire.printSummary=true --fail-at-end  # ✅ Ensures test results are visible in logs
-
-      - name:Debug: Check Target Directory
-        run: |
-          echo "Checking target directory..."
-          ls -R target/ || { echo "❌ Target directory not found"; exit 1; }
-
-      - name:Debug: Check Surefire Reports
-        run: |
-          echo "Checking Surefire reports directory..."
-          if [ -d "target/surefire-reports" ]; then
-            ls -R target/surefire-reports/
-          else
-            echo "❌ Surefire reports directory not found"
-            exit 1
-          fi
-
-      - name: Upload Test Results (If Exists)
-        if: success() && hashFiles('target/surefire-reports/*') != ''
-        uses: actions/upload-artifact@v4  # ✅ Updated to latest version
-        with:
-          name: test-results
-          path: target/surefire-reports/
+      - name: Say Hello
+        run: echo "GitHub Actions started successfully!"
