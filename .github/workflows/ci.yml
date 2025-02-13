@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4  # ✅ Updated to v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4  # ✅ Updated to latest version
 
-      - name: Set up Java
+      - name: Set Up Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
@@ -24,17 +24,26 @@ jobs:
         run: mvn clean install
 
       - name: Run TestNG Tests
-        run: mvn test -Dsurefire.printSummary=true --fail-at-end  # ✅ Ensures test results appear in logs
+        run: mvn test -Dsurefire.printSummary=true --fail-at-end  # ✅ Ensures test results are visible in logs
 
-      - name:Debug: List Files in Target Directory
-        run: ls -R target/ || echo "Target directory not found"
+      - name:Debug: Check Target Directory
+        run: |
+          echo "Checking target directory..."
+          ls -R target/ || { echo "❌ Target directory not found"; exit 1; }
 
-      - name:Debug: List Files in Surefire Reports Directory
-        run: ls -R target/surefire-reports/ || echo "Surefire reports directory not found"
+      - name:Debug: Check Surefire Reports
+        run: |
+          echo "Checking Surefire reports directory..."
+          if [ -d "target/surefire-reports" ]; then
+            ls -R target/surefire-reports/
+          else
+            echo "❌ Surefire reports directory not found"
+            exit 1
+          fi
 
-      - name: Upload Test Results
-        if: success()
-        uses: actions/upload-artifact@v4  # ✅ Updated to v4
+      - name: Upload Test Results (If Exists)
+        if: success() && hashFiles('target/surefire-reports/*') != ''
+        uses: actions/upload-artifact@v4  # ✅ Updated to latest version
         with:
           name: test-results
           path: target/surefire-reports/
