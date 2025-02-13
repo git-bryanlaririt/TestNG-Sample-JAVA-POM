@@ -1,10 +1,15 @@
-name: Minimal Selenium TestNG CI
+name: Selenium TestNG CI with Maven
 
-on: push
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -15,5 +20,34 @@ jobs:
           distribution: 'temurin'
           java-version: '8'
 
-      - name: Build with Maven (Basic)
-        run: mvn clean compile
+      - name: Build with Maven
+        run: mvn clean install
+
+      - name: Run TestNG Tests with Debugging
+        run: mvn test -X -Dsurefire.printSummary=true --fail-at-end
+
+      - name: Debug - List Target Directory
+        run: |
+          if [ -d "target" ]; then
+            ls -R target/
+          else
+            echo "❌ Target directory not found"
+            exit 1
+          fi
+
+      - name: Debug - List Surefire Reports
+        run: |
+          if [ -d "target/surefire-reports" ]; then
+            ls -R target/surefire-reports/
+          else
+            echo "❌ Surefire reports directory not found"
+            exit 1
+          fi
+
+      - name: Upload Test Results (If Exists)
+        if: always()  # Runs even if tests fail
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: target/surefire-reports/
+          if-no-files-found: warn  # Prevents failure if no test results exist
