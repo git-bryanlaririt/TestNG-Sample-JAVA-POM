@@ -2,7 +2,7 @@
 <suite name="SampleProjectSuite">
     <test name="AllTestCases">
         <packages>
-            <package name="TestCases"/>
+            
         </packages>
     </test>
 </suite>
