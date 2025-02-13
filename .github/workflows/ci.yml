@@ -26,10 +26,10 @@ jobs:
       - name: Run TestNG Tests
         run: mvn test -Dsurefire.printSummary=true --fail-at-end  # ✅ Ensures test results appear in logs
 
-      - name: Debug: List Files in Target Directory
+      - name:Debug: List Files in Target Directory
         run: ls -R target/ || echo "Target directory not found"
 
-      - name: Debug: List Files in Surefire Reports Directory
+      - name:Debug: List Files in Surefire Reports Directory
         run: ls -R target/surefire-reports/ || echo "Surefire reports directory not found"
 
       - name: Upload Test Results
