@@ -1,10 +1,10 @@
-name: Selenium TestNG CI with Maven
+name: Java CI with Maven
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   build:
@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # ✅ Updated to v4
 
       - name: Set up Java
         uses: actions/setup-java@v3
@@ -24,10 +24,17 @@ jobs:
         run: mvn clean install
 
       - name: Run TestNG Tests
-        run: mvn test -Dsurefire.printSummary=true  # ✅ Prints test results in logs
+        run: mvn test -Dsurefire.printSummary=true --fail-at-end  # ✅ Ensures test results appear in logs
+
+      - name: Debug: List Files in Target Directory
+        run: ls -R target/ || echo "Target directory not found"
+
+      - name: Debug: List Files in Surefire Reports Directory
+        run: ls -R target/surefire-reports/ || echo "Surefire reports directory not found"
 
       - name: Upload Test Results
-        uses: actions/upload-artifact@v4
+        if: success()
+        uses: actions/upload-artifact@v4  # ✅ Updated to v4
         with:
           name: test-results
-          path: target/surefire-reports/  # ✅ Saves detailed test reports
+          path: target/surefire-reports/
