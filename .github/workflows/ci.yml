@@ -24,7 +24,7 @@ jobs:
         run: mvn clean install
 
       - name: Run TestNG Tests with Debugging
-        run: mvn test -X -Dsurefire.printSummary=true --fail-at-end
+        run: mvn test -Dsurefire.failIfNoSpecifiedTests=false -Dsurefire.printSummary=true --fail-at-end
 
       - name: Debug - List Target Directory
         run: |
