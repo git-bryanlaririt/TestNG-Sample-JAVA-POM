@@ -29,7 +29,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- WebDriver Manager (optional, for easier browser setup) -->
+        <!-- WebDriver Manager -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
@@ -57,8 +57,9 @@
                 <version>2.22.2</version> <!-- Changed from 3.0.0-M7 to stable version -->
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile> <!-- Ensure this is correct -->
+                        <suiteXmlFile>testng.xml</suiteXmlFile> 
                     </suiteXmlFiles>
+                    <argLine>-Xmx1024m -XX:MaxPermSize=512m</argLine> 
                 </configuration>
             </plugin>
         </plugins>
