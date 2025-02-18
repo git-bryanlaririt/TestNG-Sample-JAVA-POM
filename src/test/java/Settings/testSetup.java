@@ -29,9 +29,20 @@ public class testSetup {
             ChromeOptions options = new ChromeOptions();
 
             // Generate a unique user-data directory using timestamp
+            // Clean up any existing user data directory before setting up the new one
             String uniqueUserDataDir = "/tmp/chrome-user-data-" + UUID.randomUUID().toString();
-            
             File userDataDir = new File(uniqueUserDataDir);
+            
+            // Clean up previous directories if they exist
+            if (userDataDir.exists()) {
+                try {
+                    FileUtils.deleteDirectory(userDataDir);  // Use FileUtils from Apache Commons IO
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            
+            // Create new directory for the test
             if (!userDataDir.exists()) {
                 boolean created = userDataDir.mkdirs();
                 if (!created) {
