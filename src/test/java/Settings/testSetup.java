@@ -8,6 +8,11 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import Listeners.testListeners;
 
 public class testSetup {
@@ -16,26 +21,34 @@ public class testSetup {
 
     @BeforeTest
     public static WebDriver driverSetup() {
-    // Check if driver is already initialized to avoid redundant instances
-        if (driver == null) {
-            // Use Selenium Manager to automatically resolve the ChromeDriver path
+    if (driver == null) {
+            // Setup WebDriverManager to download and setup the ChromeDriver
             WebDriverManager.chromedriver().setup();
 
-            // Create ChromeOptions instance for additional configurations
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--remote-allow-origins=*");  // Allow cross-origin requests if needed
-            options.addArguments("--user-data-dir=" + System.getProperty("java.io.tmpdir") + "/chrome-user-data"); // Disable the use of user data directory or set a unique one 
 
-            // Initialize ChromeDriver with options
+            // Generate a unique user-data directory using timestamp
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
+            String timestamp = dateFormatter.format(new Date());
+            
+            // Create a temporary directory for user data in the system's temp directory
+            String uniqueUserDataDir = System.getProperty("java.io.tmpdir") + "chrome-user-data-" + timestamp;
+            File userDataDir = new File(uniqueUserDataDir);
+            if (!userDataDir.exists()) {
+                userDataDir.mkdirs(); // Create the directory if it doesn't exist
+            }
+
+            // Add unique user data dir argument to Chrome options
+            options.addArguments("--remote-allow-origins=*");
+            options.addArguments("--user-data-dir=" + userDataDir.getAbsolutePath());
+
+            // Initialize ChromeDriver with the configured options
             driver = new ChromeDriver(options);
 
-            // Pass the driver instance to the testListeners for reporting/logging
-            testListeners.setupDriver(driver);
-
-            // Maximize browser window for consistent viewport during test execution
+            // Maximize window
             driver.manage().window().maximize();
 
-            // Open the target website before tests start
+            // Launch the desired URL
             driver.get("https://www.saucedemo.com/");
     }
     return driver;  // Return the WebDriver instance for use in tests
