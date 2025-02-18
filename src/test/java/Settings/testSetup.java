@@ -18,24 +18,24 @@ public class testSetup {
     public static WebDriver driverSetup() {
     // Check if driver is already initialized to avoid redundant instances
         if (driver == null) {
-        // Use Selenium Manager to automatically resolve the ChromeDriver path
-            System.setProperty("webdriver.chrome.driver", WebDriverManager.chromedriver().setup());
+            // Use Selenium Manager to automatically resolve the ChromeDriver path
+            WebDriverManager.chromedriver().setup();
 
-        // Create ChromeOptions instance for additional configurations
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");  // Allow cross-origin requests if needed
+            // Create ChromeOptions instance for additional configurations
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--remote-allow-origins=*");  // Allow cross-origin requests if needed
 
-        // Initialize ChromeDriver with options
-        driver = new ChromeDriver(options);
+            // Initialize ChromeDriver with options
+            driver = new ChromeDriver(options);
 
-        // Pass the driver instance to the testListeners for reporting/logging
-        testListeners.setupDriver(driver);
+            // Pass the driver instance to the testListeners for reporting/logging
+            testListeners.setupDriver(driver);
 
-        // Maximize browser window for consistent viewport during test execution
-        driver.manage().window().maximize();
+            // Maximize browser window for consistent viewport during test execution
+            driver.manage().window().maximize();
 
-        // Open the target website before tests start
-        driver.get("https://www.saucedemo.com/");
+            // Open the target website before tests start
+            driver.get("https://www.saucedemo.com/");
     }
     return driver;  // Return the WebDriver instance for use in tests
 }
