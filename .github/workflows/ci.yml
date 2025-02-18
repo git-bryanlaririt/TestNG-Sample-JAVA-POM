@@ -21,16 +21,19 @@ jobs:
           java-version: '11'
 
       - name: Clean and Build with Maven
-        run: mvn clean install --batch-mode --fail-at-end
+        run: mvn clean install --batch-mode --fail-at-end -DskipTests
 
       - name: Run TestNG Tests with Debugging
-        run: mvn clean test -Dsurefire.failIfNoSpecifiedTests=false -Dsurefire.printSummary=true --fail-at-end
+        run: mvn clean test -Dsurefire.failIfNoSpecifiedTests=false -Dsurefire.printSummary=true --fail-at-end -X
 
       - name: Debug - List Target Directory
-        run: ls -R target/ || echo "❌ Target directory not found"
+        run: ls -lah target/ || echo "❌ Target directory not found"
 
       - name: Debug - List Surefire Reports
-        run: ls -R target/surefire-reports/ || echo "❌ Surefire reports directory not found"
+        run: ls -lah target/surefire-reports/ || echo "❌ Surefire reports directory not found"
+
+      - name: Show Surefire Reports in Logs
+        run: cat target/surefire-reports/*.txt || echo "⚠ No test reports found"
 
       - name: Upload Test Results (If Exists)
         if: always()  # Runs even if tests fail
@@ -39,3 +42,11 @@ jobs:
           name: test-results
           path: target/surefire-reports/
           if-no-files-found: warn  # Prevents failure if no test results exist
+
+      - name: Upload Maven Logs (For Debugging)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: maven-logs
+          path: target/surefire-reports/*.dumpstream
+          if-no-files-found: warn
