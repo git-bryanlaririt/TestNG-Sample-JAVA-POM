@@ -28,11 +28,7 @@ public class testSetup {
             ChromeOptions options = new ChromeOptions();
 
             // Generate a unique user-data directory using timestamp
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
-            String timestamp = dateFormatter.format(new Date());
-            
-            // Path to a simple location in tmp or another accessible directory
-            String uniqueUserDataDir = "/tmp/chrome-user-data-" + timestamp; // Use a simple path here
+            String uniqueUserDataDir = "/tmp/chrome-user-data-" + UUID.randomUUID().toString();
             
             File userDataDir = new File(uniqueUserDataDir);
             if (!userDataDir.exists()) {
