@@ -24,6 +24,7 @@ public class testSetup {
             // Create ChromeOptions instance for additional configurations
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--remote-allow-origins=*");  // Allow cross-origin requests if needed
+            options.addArguments("--user-data-dir=" + System.getProperty("java.io.tmpdir") + "/chrome-user-data"); // Disable the use of user data directory or set a unique one 
 
             // Initialize ChromeDriver with options
             driver = new ChromeDriver(options);
