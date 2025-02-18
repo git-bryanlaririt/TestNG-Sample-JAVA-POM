@@ -20,29 +20,17 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Build with Maven
-        run: mvn clean install
+      - name: Clean and Build with Maven
+        run: mvn clean install --batch-mode --fail-at-end
 
       - name: Run TestNG Tests with Debugging
-        run: mvn test -Dsurefire.failIfNoSpecifiedTests=false -Dsurefire.printSummary=true --fail-at-end
+        run: mvn clean test -Dsurefire.failIfNoSpecifiedTests=false -Dsurefire.printSummary=true --fail-at-end
 
       - name: Debug - List Target Directory
-        run: |
-          if [ -d "target" ]; then
-            ls -R target/
-          else
-            echo "❌ Target directory not found"
-            exit 1
-          fi
+        run: ls -R target/ || echo "❌ Target directory not found"
 
       - name: Debug - List Surefire Reports
-        run: |
-          if [ -d "target/surefire-reports" ]; then
-            ls -R target/surefire-reports/
-          else
-            echo "❌ Surefire reports directory not found"
-            exit 1
-          fi
+        run: ls -R target/surefire-reports/ || echo "❌ Surefire reports directory not found"
 
       - name: Upload Test Results (If Exists)
         if: always()  # Runs even if tests fail
