@@ -15,18 +15,29 @@ public class testSetup {
 
     @BeforeTest
     public static WebDriver driverSetup() {
+    // Check if driver is already initialized to avoid redundant instances
         if (driver == null) {
-            System.setProperty("webdriver.chrome.driver", "C://Users//Bryan//OneDrive//Documents//IntelliJ Projects//chromedriver-win32//chromedriver-win32//chromedriver.exe");
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--remote-allow-origins=*");
-            driver = new ChromeDriver(options);
-            testListeners.setupDriver(driver);
-            driver.manage().window().maximize();
-            driver.get("https://www.saucedemo.com/");
-        }
-        return driver;
-    }
+        // Use Selenium Manager to automatically resolve the ChromeDriver path
+            System.setProperty("webdriver.chrome.driver", WebDriverManager.chromedriver().setup());
 
+        // Create ChromeOptions instance for additional configurations
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--remote-allow-origins=*");  // Allow cross-origin requests if needed
+
+        // Initialize ChromeDriver with options
+        driver = new ChromeDriver(options);
+
+        // Pass the driver instance to the testListeners for reporting/logging
+        testListeners.setupDriver(driver);
+
+        // Maximize browser window for consistent viewport during test execution
+        driver.manage().window().maximize();
+
+        // Open the target website before tests start
+        driver.get("https://www.saucedemo.com/");
+    }
+    return driver;  // Return the WebDriver instance for use in tests
+}
     @AfterTest
     public static void testTearDown() {
         if (driver != null) {
