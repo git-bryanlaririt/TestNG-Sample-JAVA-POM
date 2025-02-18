@@ -31,11 +31,15 @@ public class testSetup {
             SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
             String timestamp = dateFormatter.format(new Date());
             
-            // Create a temporary directory for user data in the system's temp directory
-            String uniqueUserDataDir = System.getProperty("java.io.tmpdir") + "chrome-user-data-" + timestamp;
+            // Path to a simple location in tmp or another accessible directory
+            String uniqueUserDataDir = "/tmp/chrome-user-data-" + timestamp; // Use a simple path here
+            
             File userDataDir = new File(uniqueUserDataDir);
             if (!userDataDir.exists()) {
-                userDataDir.mkdirs(); // Create the directory if it doesn't exist
+                boolean created = userDataDir.mkdirs();
+                if (!created) {
+                    throw new RuntimeException("Failed to create user data directory at: " + userDataDir.getAbsolutePath());
+                }
             }
 
             // Add unique user data dir argument to Chrome options
