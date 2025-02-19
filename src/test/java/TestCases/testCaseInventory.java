@@ -17,7 +17,7 @@ public class testCaseInventory extends testSetup{
     public void browserDriverSetup(){
         //Test Setup
         driver = testSetup.driverSetup(); // Initialize WebDriver
-        testListeners.setupDriver(driver); // Pass WebDriver to the listener
+        testListeners.setupDriver(driver); // Pass WebDriver to the listener 
     }
     
     @Test
