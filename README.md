@@ -9,5 +9,4 @@ The goal is to crate a test for individual functions of the pages.
 The test only covers happy path.
 
 Feb. 13, 2025.
-
 Added github actions
