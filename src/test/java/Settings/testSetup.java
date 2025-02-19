@@ -32,7 +32,7 @@ public class testSetup {
 
             // Generate a unique user-data directory using timestamp
             // Clean up any existing user data directory before setting up the new one
-            String uniqueUserDataDir = "/tmp/chrome-user-data-" + UUID.randomUUID().toString();
+            String uniqueUserDataDir = System.getProperty("java.io.tmpdir") + "/chrome-user-data-" + UUID.randomUUID();
             File userDataDir = new File(uniqueUserDataDir);
             
             // Clean up previous directories if they exist
