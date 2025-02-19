@@ -5,6 +5,9 @@ import org.testng.annotations.*;
 import Settings.testSetup;
 import Pages.InventoryPage;
 import Pages.LoginPage;
+import Listeners.testListeners;
+
+@Listeners(testListeners.class)
 
 public class testCaseInventory extends testSetup{
 
