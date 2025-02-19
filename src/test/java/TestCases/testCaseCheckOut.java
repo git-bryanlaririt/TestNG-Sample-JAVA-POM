@@ -17,8 +17,10 @@ public class testCaseCheckOut {
 
     @BeforeMethod
     public void testBrowserSetup(){
-        driver = testSetup.driverSetup();
+        driver = testSetup.driverSetup(); // Initialize WebDriver
+        testListeners.setupDriver(driver); // Pass WebDriver to the listener
     }
+    
     @Test
     public void completeCheckoutSingletItem(){
         //Login as valid user
