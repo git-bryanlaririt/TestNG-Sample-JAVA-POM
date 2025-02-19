@@ -1,12 +1,15 @@
-# TestNG-Sample-JAVA-POM
+Test Automation Project with TestNG and Page Object Model
 
-Sample project created to demostrate my knowledge in using TestNG as test framework and Java as programming language with Page-Object-Model as design Pattern.
+This is a sample project created to demonstrate my proficiency in using TestNG as a test framework and Java as the programming language, following the Page Object Model (POM) design pattern.
 
-The application used is from sauce labs where it has login, add to cart, and checkout function.
+Application Under Test
+The test cases are designed for the Sauce Labs demo application, which includes the following functionalities:
 
-The goal is to crate a test for individual functions of the pages.
-
-The test only covers happy path.
-
-Feb. 13, 2025.
-Added github actions
+User login
+Adding items to the cart
+Checkout process
+Test Scope
+The test suite covers individual functions of the application.
+Only happy path scenarios are tested.
+Recent Updates
+Feb. 13, 2025: Added GitHub Actions for continuous integration.
