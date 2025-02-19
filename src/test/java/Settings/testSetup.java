@@ -57,7 +57,7 @@ public class testSetup {
             options.addArguments("--headless=new");  // Use new headless mode for stability
             options.addArguments("--no-sandbox");   // Required for running as root in CI
             options.addArguments("--disable-dev-shm-usage"); // Helps with shared memory issues in Docker
-            // options.addArguments("--user-data-dir=" + userDataDir.getAbsolutePath()); 
+            options.addArguments("--user-data-dir=" + userDataDir.getAbsolutePath()); 
 
             // Initialize ChromeDriver with the configured options
             driver = new ChromeDriver(options);
