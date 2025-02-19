@@ -22,7 +22,8 @@ public class testCaseCartPage {
 
     @BeforeMethod
     public void setupCartTest(){
-        driver = testSetup.driverSetup();
+        driver = testSetup.driverSetup(); // Initialize WebDriver
+        testListeners.setupDriver(driver); // Pass WebDriver to the listener
     }
 
     @Test
