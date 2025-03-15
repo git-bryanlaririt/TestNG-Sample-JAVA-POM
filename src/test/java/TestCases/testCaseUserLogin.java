@@ -15,7 +15,7 @@ public class testCaseUserLogin extends testSetup{
     private WebDriver driver;
 
     @BeforeMethod
-    public void validUserLoginSetup(){
+    public void UserLoginTestSetup(){
         driver = testSetup.driverSetup(); // Initialize WebDriver
         testListeners.setupDriver(driver); // Pass WebDriver to the listener 
     }
@@ -44,7 +44,7 @@ public class testCaseUserLogin extends testSetup{
 
         //verification
         String expectedLockedErrorMsg = "Epic sadface: Sorry, this user has been locked out.";
-        String actualLockedErrorMsg = lockUserLogin.GetLockUserErrorMsg();
+        String actualLockedErrorMsg = lockUserLogin.getLockUserErrorMsg();
         Assert.assertEquals(expectedLockedErrorMsg, actualLockedErrorMsg, " " + actualLockedErrorMsg);
     }
 

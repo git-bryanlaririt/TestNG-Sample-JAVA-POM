@@ -50,7 +50,7 @@ public class testCaseInventory extends testSetup{
 
         InventoryPage removeSingleItem = new InventoryPage(driver);
         removeSingleItem.addToCartBackPack();
-        removeSingleItem.setRemoveItemBackPack();
+        removeSingleItem.removeItemBackPack();
     }
 
     @Test
@@ -61,8 +61,8 @@ public class testCaseInventory extends testSetup{
         InventoryPage removeMultiple = new InventoryPage(driver);
         removeMultiple.addToCartBackPack();
         removeMultiple.addToCartBikeLight();
-        removeMultiple.removeBikeLightfromCart();
-        removeMultiple.setRemoveItemBackPack();
+        removeMultiple.removeBikeLightFromCart();
+        removeMultiple.removeItemBackPack();
     }
 
     @AfterMethod

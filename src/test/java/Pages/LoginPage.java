@@ -1,7 +1,9 @@
 package Pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage{
 
@@ -9,38 +11,50 @@ public class LoginPage{
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
+        PageFactory.initElements(driver, this); //initialize page factory
     }
-            private final By UserName = By.id("user-name");
-            private final By Password = By.id("password");
-            private final By LoginBtn = By.id("login-button");
-            private final By LockUserErrorMsg = By.className("error-message-container");
-            private final By inventoryPageHeader = By.className("app_logo");
+            //Locate login page web elements using page factory @FindBy annotation
+            @FindBy(id = "user-name")
+            private WebElement usernameField;
 
-            public void enterUsername(String username){
-                driver.findElement(UserName).sendKeys(username);
+            @FindBy(id = "password")
+            private WebElement passwordField;
+
+            @FindBy(id = "login-button")
+            private WebElement loginButton;
+
+            @FindBy(className = "error-message-container")
+            private WebElement lockedUserErrorMessage;
+
+            @FindBy(className = "app_logo")
+            private WebElement appHeader;
+
+            //Login page web element interaction methods
+            public void inputUsername(String username){
+               usernameField.sendKeys(username);
             }
 
-            public void enterPassword(String password){
-                driver.findElement(Password).sendKeys(password);
+            public void inputPassword(String password){
+                passwordField.sendKeys(password);
             }
 
-            public void ClickBTN(){
-                driver.findElement(LoginBtn).click();
+            public void clickLoginButton(){
+                loginButton.click();
             }
-           public String GetLockUserErrorMsg(){
-                return driver.findElement(LockUserErrorMsg).getText();
+           public String getLockUserErrorMsg(){
+                return lockedUserErrorMessage.getText();
            }
            public String verifyPageHeader(){
-               return driver.findElement(inventoryPageHeader).getText();
+               return appHeader.getText();
            }
            public void loginAsValidUser(){
-                enterUsername("standard_user");
-                enterPassword("secret_sauce");
-                ClickBTN();
+               inputUsername("standard_user");
+                inputPassword("secret_sauce");
+                clickLoginButton();
            }
            public void loginAsLockedUser(){
-               enterUsername("locked_out_user");
-               enterPassword("secret_sauce");
-               ClickBTN();
+               inputUsername("locked_out_user");
+               inputPassword("secret_sauce");
+               clickLoginButton();
            }
 }

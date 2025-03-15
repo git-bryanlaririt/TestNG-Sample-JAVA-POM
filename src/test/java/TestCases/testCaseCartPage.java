@@ -85,8 +85,8 @@ public class testCaseCartPage {
         cartPage.goContinueShopping();
 
         //Verify if the user has successfully returned to inventory page
-        assertTrue(addToCart.removeItemBackPackbtn().isDisplayed());
-        assertTrue(addToCart.secondaryPageTitleisDisplayed().isDisplayed());
+        assertTrue(addToCart.removeItemBackPack().isDisplayed());
+        assertTrue(addToCart.getSecondaryPageHeader().isDisplayed());
         
     }
     @Test

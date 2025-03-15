@@ -5,68 +5,89 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import java.time.Duration;
 
 public class InventoryPage {
     private final WebDriver driver;
+    private WebDriverWait wait;
 
-    public InventoryPage (WebDriver driver){
+    // Constructor initializes WebDriver and PageFactory
+    public InventoryPage(WebDriver driver){
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        PageFactory.initElements(driver, this);
     }
 
-    By appLogo = By.className("app_logo");
-    By shoppingCartLink = By.xpath("//*[@id=\"shopping_cart_container\"]/a");
-    By hamburgerMenu = By.id("react-burger-menu-btn");
-    By userLogoutLnk = By.xpath("//*[@id=\"logout_sidebar_link\"]");
-    By sauceLabsBackPack = By.xpath("//*[@id=\"add-to-cart-sauce-labs-backpack\"]");
-    By sauceLabsBikeLight = By.xpath("//*[@id=\"add-to-cart-sauce-labs-bike-light\"]");
-    By removeItemBikeLight = By.id("remove-sauce-labs-bike-light");
-    By removeItemBackPack = By.id("remove-sauce-labs-backpack");
-    By cartBadge = By.id("shopping_cart_badge");
-    By secondaryPageHeader = By.className("title");
+    // WebElements for the page
+    @FindBy(className = "app_logo")
+    private WebElement appLogo;
 
-    public void ClickHamburgerMenu(){
-        driver.findElement(hamburgerMenu).click();
+    @FindBy(xpath = "//*[@id=\"shopping_cart_container\"]/a")
+    private WebElement shoppingCartLink;
+
+    @FindBy(id = "react-burger-menu-btn")
+    private WebElement hamburgerMenu;
+
+    @FindBy(xpath = "//*[@id=\"logout_sidebar_link\"]")
+    private WebElement userLogoutLnk;
+
+    @FindBy(xpath = "//*[@id=\"add-to-cart-sauce-labs-backpack\"]")
+    private WebElement sauceLabsBackPack;
+
+    @FindBy(xpath = "//*[@id=\"add-to-cart-sauce-labs-bike-light\"]")
+    private WebElement sauceLabsBikeLight;
+
+    @FindBy(id = "remove-sauce-labs-bike-light")
+    private WebElement removeItemBikeLight;
+
+    @FindBy(id = "remove-sauce-labs-backpack")
+    private WebElement removeItemBackPack;
+
+    @FindBy(id = "shopping_cart_badge")
+    private WebElement cartBadge;
+
+    @FindBy(className = "title")
+    private WebElement secondaryPageHeader;
+
+    // Helper method to wait and click an element
+    private void waitForAndClick(WebElement element) {
+        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 
-    public void ClickLogoutLink(){
-        WebDriverWait waitElement = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement clickLogoutLink = waitElement.until(ExpectedConditions.presenceOfElementLocated(userLogoutLnk));
-        clickLogoutLink.findElement(userLogoutLnk).click();
+    // Actions
+    public void clickHamburgerMenu() {
+        waitForAndClick(hamburgerMenu);
     }
 
-    public void gotoCart(){
-        WebDriverWait clickCartIcon = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement cartLink = clickCartIcon.until(ExpectedConditions.presenceOfElementLocated(shoppingCartLink));
-        cartLink.findElement(shoppingCartLink).click();
+    public void clickLogoutLink() {
+        waitForAndClick(userLogoutLnk);
     }
 
-    public void addToCartBackPack(){
-        WebDriverWait backPackAddBtn = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement backPackBtn = backPackAddBtn.until(ExpectedConditions.presenceOfElementLocated(sauceLabsBackPack));
-        backPackBtn.findElement(sauceLabsBackPack).click();
+    public void gotoCart() {
+        waitForAndClick(shoppingCartLink);
     }
 
-    public void setRemoveItemBackPack(){
-        driver.findElement(removeItemBackPack).click();
+    public void addToCartBackPack() {
+        waitForAndClick(sauceLabsBackPack);
     }
 
-    public WebElement removeItemBackPackbtn(){
-        return driver.findElement(removeItemBackPack);
+    public WebElement removeItemBackPack() {
+        return removeItemBackPack;
     }
 
-    public void addToCartBikeLight(){
-        WebDriverWait waitbikeLightBtn = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement bikeLightBtn = waitbikeLightBtn.until(ExpectedConditions.presenceOfElementLocated(sauceLabsBikeLight));
-        bikeLightBtn.findElement(sauceLabsBikeLight).click();
+    public void addToCartBikeLight() {
+        waitForAndClick(sauceLabsBikeLight);
     }
 
-    public void removeBikeLightfromCart(){
-        driver.findElement(removeItemBikeLight).click();
+    public void removeBikeLightFromCart() {
+        waitForAndClick(removeItemBikeLight);
     }
 
-    public WebElement secondaryPageTitleisDisplayed(){
-        return driver.findElement(secondaryPageHeader);
+    // Getter for secondary page header (if needed for validation)
+    public WebElement getSecondaryPageHeader() {
+        return secondaryPageHeader;
     }
 }

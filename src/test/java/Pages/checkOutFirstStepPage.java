@@ -16,7 +16,7 @@ public class checkOutFirstStepPage {
     By lastNameField = By.id("last-name");
     By postalCodeField = By.id("postal-code");
     By continueButton = By.id("continue");
-    By canceButton = By.id("cancel");
+    By cancelButton = By.id("cancel");
 
     public void fillOutFirstName(){
         driver.findElement(firstNameField).sendKeys("Test First Name");
@@ -39,7 +39,7 @@ public class checkOutFirstStepPage {
     }
 
     public void clickCancelButton(){
-        driver.findElement(canceButton).click();
+        driver.findElement(cancelButton).click();
     }
 
 }
